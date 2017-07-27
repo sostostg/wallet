@@ -50,7 +50,7 @@ class App extends Component {
                                 <NavLink onClick={this.reset}>Reset</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="https://github.com/sostostg/wallet">View Source</NavLink>
+                                <NavLink href="https://github.com/sostostg/wallet" target="_blank">View Source</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>
