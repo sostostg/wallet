@@ -28,7 +28,7 @@ const Deposits = (props) => {
                 {props.deposits.map(function (withdraw, index) {
                     return (
                         <tr className="bg-success text-white" key={index}>
-                            <td>+{withdraw.amount}</td>
+                            <td>+${withdraw.amount}</td>
                             <td>{withdraw.timestamp}</td>
                         </tr>
                     );

@@ -8,6 +8,7 @@ import * as actions from '../actions/walletActions';
 import PropTypes from 'prop-types';
 import Withdrawals from './Withdrawals';
 import Deposits from './Deposits';
+import EasterEgg from './Easter';
 
 import {
     Button,
@@ -33,11 +34,17 @@ class Home extends React.Component {
     }
 
     deposit() {
-        this.props.actions.deposit(this.state.amount);
+        if (!isNaN(this.state.amount)) {
+            this.props.actions.deposit(this.state.amount);
+        }
     }
 
     withdraw() {
-        this.props.actions.withdraw(this.state.amount);
+        const {account} = this.props.account;
+
+        if (account.balance - this.state.amount >= 0) {
+            this.props.actions.withdraw(this.state.amount);
+        }
     }
 
     render() {
@@ -78,6 +85,8 @@ class Home extends React.Component {
                         </Row>
                     </div>
                 </Jumbotron>
+
+                <EasterEgg />
 
                 <Row className="text-center">
                     <Col>

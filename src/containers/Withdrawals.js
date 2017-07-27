@@ -29,7 +29,7 @@ const Withdrawals = (props) => {
                 {props.withdrawals.map(function (withdraw, index) {
                     return (
                         <tr className="bg-danger text-white" key={index}>
-                            <td>-{withdraw.amount}</td>
+                            <td>-${withdraw.amount}</td>
                             <td>{withdraw.timestamp}</td>
                         </tr>
                     );
