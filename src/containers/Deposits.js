@@ -8,14 +8,9 @@ import PropTypes from 'prop-types';
 const Deposits = (props) => {
     return (
         <div>
-            <h1>
+            <h2>
                 Deposits
-            </h1>
-            <h5>
-                <div>
-                    <div>Your recent deposits</div>
-                </div>
-            </h5>
+            </h2>
 
             <table className="table">
                 <thead>

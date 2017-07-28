@@ -70,14 +70,14 @@ class Home extends React.Component {
 
                         <Row className="text-center">
                             <Col>
-                                <h1>Make a Deposit</h1>
+                                <h2>Make a Deposit</h2>
                                 <input type="number"
                                        onChange={this.handleChange} /*onBlur={(e) => e.target.value=''}*//><br/><br/>
                                 <Button color="success" onClick={this.deposit}
                                         placeholder="Enter $ Amount">Deposit</Button>
                             </Col>
                             <Col>
-                                <h1>Make a Withdrawal</h1>
+                                <h2>Make a Withdrawal</h2>
                                 <input type="number" onChange={this.handleChange}/><br/><br/>
                                 <Button color="danger" onClick={this.withdraw}
                                         placeholder="Enter $ Amount">Withdraw</Button>

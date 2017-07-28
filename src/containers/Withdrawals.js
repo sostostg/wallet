@@ -9,14 +9,9 @@ const Withdrawals = (props) => {
     return (
         <div>
 
-            <h1>
+            <h2>
                 Withdrawals
-            </h1>
-            <h5>
-                <div>
-                    <div>Your recent withdrawals</div>
-                </div>
-            </h5>
+            </h2>
 
             <table className="table">
                 <thead>
