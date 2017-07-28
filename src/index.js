@@ -7,13 +7,18 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import {syncHistoryWithStore} from 'react-router-redux';
 import {saveState} from './localStorage';
-import throttle from 'lodash/throttle';
+// import throttle from 'lodash/throttle';
 
 const store = configureStore();
 
-store.subscribe(throttle(() => {
+//if you want to throttle expensive state save
+// store.subscribe(throttle(() => {
+//     saveState(store.getState())
+// }, 1000));
+
+store.subscribe(() => {
     saveState(store.getState())
-}, 1000));
+});
 
 const history = syncHistoryWithStore(browserHistory, store);
 
