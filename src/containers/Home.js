@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import Withdrawals from './Withdrawals';
 import Deposits from './Deposits';
 import EasterEgg from './Easter';
+import ReactDOM from 'react-dom';
 
 import {
     Button,
@@ -22,33 +23,64 @@ class Home extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            amount: this.props.account.balance
+            amount: this.props.account.balance,
+            error: 0
         };
         this.handleChange = this.handleChange.bind(this);
         this.deposit = this.deposit.bind(this);
         this.withdraw = this.withdraw.bind(this);
+        this.resetAmount = this.resetAmount.bind(this);
+    }
+
+    resetAmount() {
+        this.setState({amount: undefined});
     }
 
     handleChange(e) {
         this.setState({amount: parseInt(e.target.value, 10)});
+        this.setState({error: 0});
+        this.setState({check: e.target.name});
     }
 
     deposit() {
-        if (!isNaN(this.state.amount)) {
-            this.props.actions.deposit(this.state.amount);
+
+        if (this.state.check === 'deposit') {
+            if (!isNaN(this.state.amount)) {
+                this.props.actions.deposit(this.state.amount);
+            }
+            else
+                this.setState({error: 1});
         }
     }
 
     withdraw() {
         const {account} = this.props.account;
 
-        if (account.balance - this.state.amount >= 0) {
-            this.props.actions.withdraw(this.state.amount);
+        if (this.state.check === 'withdraw') {
+            if (!isNaN(this.state.amount)) {
+                if (account.balance - this.state.amount >= 0) {
+                    this.props.actions.withdraw(this.state.amount);
+                }
+                else
+                    this.setState({error: 2});
+            }
+            else
+                this.setState({error: 1});
         }
     }
 
     render() {
         const {account} = this.props.account;
+        const error = this.state.error;
+        let errorText = null;
+
+        if (error === 1) {
+            errorText = <h6 className="bg-danger text-white text-center">Please enter a valid number</h6>;
+        }
+        else if (error === 2) {
+            errorText = <h6 className="bg-danger text-white text-center">Can't withdraw more than balance</h6>;
+        }
+
         return (
             <div>
                 <Jumbotron>
@@ -71,18 +103,29 @@ class Home extends React.Component {
                         <Row className="text-center">
                             <Col>
                                 <h2>Make a Deposit</h2>
-                                <input type="number"
-                                       onChange={this.handleChange} /*onBlur={(e) => e.target.value=''}*//><br/><br/>
-                                <Button color="success" onClick={this.deposit}
+                                <input name="deposit" ref="deposit" type="number"
+                                       onChange={this.handleChange}/><br/><br/>
+                                <Button color="success" onClick={() => {
+                                    ReactDOM.findDOMNode(this.refs.deposit).value = "";
+                                    this.deposit();
+                                    this.resetAmount();
+                                }}
                                         placeholder="Enter $ Amount">Deposit</Button>
                             </Col>
                             <Col>
                                 <h2>Make a Withdrawal</h2>
-                                <input type="number" onChange={this.handleChange}/><br/><br/>
-                                <Button color="danger" onClick={this.withdraw}
+                                <input name="withdraw" ref="withdraw" type="number"
+                                       onChange={this.handleChange}/><br/><br/>
+                                <Button color="danger" onClick={() => {
+                                    ReactDOM.findDOMNode(this.refs.withdraw).value = "";
+                                    this.withdraw();
+                                    this.resetAmount();
+                                }}
                                         placeholder="Enter $ Amount">Withdraw</Button>
                             </Col>
                         </Row>
+                        <br/>
+                        {(error === 1 || error === 2) && errorText}
                     </div>
                 </Jumbotron>
 
