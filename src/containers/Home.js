@@ -43,10 +43,11 @@ class Home extends React.Component {
     }
 
     deposit() {
+        const amount = this.state.amount;
 
         if (this.state.check === 'deposit') {
-            if (!isNaN(this.state.amount)) {
-                this.props.actions.deposit(this.state.amount);
+            if (!isNaN(amount)) {
+                this.props.actions.deposit(amount);
             }
             else
                 this.setState({error: 1});
@@ -55,11 +56,12 @@ class Home extends React.Component {
 
     withdraw() {
         const {account} = this.props.account;
+        const amount = this.state.amount;
 
         if (this.state.check === 'withdraw') {
-            if (!isNaN(this.state.amount)) {
-                if (account.balance - this.state.amount >= 0) {
-                    this.props.actions.withdraw(this.state.amount);
+            if (!isNaN(amount)) {
+                if (account.balance - amount >= 0) {
+                    this.props.actions.withdraw(amount);
                 }
                 else
                     this.setState({error: 2});
@@ -125,7 +127,7 @@ class Home extends React.Component {
                             </Col>
                         </Row>
                         <br/>
-                        {(error === 1 || error === 2) && errorText}
+                        {(error > 0) && errorText}
                     </div>
                 </Jumbotron>
 
